@@ -1,6 +1,8 @@
 package SmokeTest;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,6 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
 
+import static org.junit.Assert.*;
+
 public class SmokeTestSteps {
     WebDriver driver = null;
     JavascriptExecutor js = null;
@@ -19,15 +23,18 @@ public class SmokeTestSteps {
 
     private class Variables {
         String MyStor_Home = "https://www.gumtree.co.za";
-        String chrome_path = "C:\\Users\\malusi.msomi\\Documents\\GitHub\\GT-smoke\\src\\main\\resources\\drivers\\chromedriver.exe";
-        String firefox_path = "C:\\Users\\malusi.msomi\\Documents\\GitHub\\GT-smoke\\src\\main\\resources\\drivers\\geckodriver.exe";
+        String chrome_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\chromedriver.exe";
+        String firefox_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\geckodriver.exe";
         String cache_proceed_btn = "/html/body//div[2]/button[contains(.,\"Proceed\")]";
         String gumtree_label = "/html/body/div[1]/div[3]/header/div[3]/nav/div[2]/span/span[contains(@class,\"label\")]";
         String username_field = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"input-main\", \" \" ))]";
         String password_field = "/html/body/div[1]/section/div[2]/div/div/div[2]/div[4]/form/div[2]/input";
-        String login_button = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-submit\", \" \" ))]";
+        String login_button = "/html/body//form/div[4]/div[2]/button[contains(.,\"Log In\")]";
+        //String login_button = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-submit\", \" \" ))]";
         String username = "/html/body/div[1]/div[3]/header/div[3]/nav/div[2]/span/span[2]";
         String Error_test = "/html/body/div[1]/section/div[2]/div/div/div[1]";
+        String password_error_dialog = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-form-error\", \" \" ))]";
+        String getPassword_error_text = "Please correct the errors in red below.";
     }
     public void SetChromeBrowserDriver(){
         System.setProperty("webdriver.chrome.driver",var.chrome_path);
@@ -77,44 +84,59 @@ public class SmokeTestSteps {
 
     @Given("the user enters their {string} and clicks create")
     public void the_user_enters_their_and_clicks_create(String string) {
-        // Write code here that turns the phrase above into concrete actions
         driver.findElement(By.xpath(var.cache_proceed_btn)).isDisplayed();
         driver.findElement(By.xpath(var.cache_proceed_btn)).click();
         driver.findElement(By.xpath(var.gumtree_label)).isDisplayed();
         driver.findElement(By.xpath(var.gumtree_label)).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        System.out.println(string);
         enter_login_details(string,var.username_field);
         //throw new io.cucumber.java.PendingException();
     }
 
     @When("the user tries logging in with a {string}")
     public void the_user_tries_logging_in_with_a(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println(string);
         enter_login_details(string, var.password_field);
-        //throw new io.cucumber.java.PendingException();
     }
 
     @Then("the user is presented with the correct user")
     public void the_user_is_presented_with_the_correct_user() {
         // Write code here that turns the phrase above into concrete actions
-        System.out.println("presented with correct user");
         driver.findElement(By.xpath(var.login_button)).isDisplayed();
         driver.findElement(By.xpath(var.login_button)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.findElement(By.xpath(var.username)).isDisplayed();
-        //throw new io.cucumber.java.PendingException();
+        verify_login();
     }
 
     public void Incorrect_login(){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(By.xpath(var.Error_test)).isDisplayed();
+        String errorTest = driver.findElement(By.xpath(var.password_error_dialog)).getText();
+        assertEquals(errorTest, var.getPassword_error_text);
+        assertTrue(driver.findElement(By.xpath(var.login_button)).isDisplayed());
     }
 
     public void enter_login_details(String string,String field){
         driver.findElement(By.xpath(field)).isDisplayed();
         driver.findElement(By.xpath(field)).click();
         driver.findElement(By.xpath(field)).sendKeys(string);
+    }
+
+    @After
+    public void close_the_browser(){
+        //Incorrect_login();
+        driver.close();
+        driver.quit();
+    }
+
+    public void verify_login(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        boolean found = driver.findElement(By.xpath(var.login_button)).isDisplayed();
+        System.out.println(found);
+        if (found){
+            Incorrect_login();
+        }
     }
 }
