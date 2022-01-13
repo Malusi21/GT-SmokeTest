@@ -1,17 +1,14 @@
 # Author: Malusi Msomi
-  # Date: 17 November 2021
+  # Date: 11 January 2022
   # Description:The following User Scenarios are bases off a online shopping store gumtree and running a smoke test that does a login
 
 @SmokeTest
 Feature: Smoke Test Gumtree
-  #  The following feature outlines th test cases and test scenarios that are related to the online registration
-  #  conducted on a online ordering store
+  #  The following feature outlines th test cases and test scenarios that are related to a login smoke test
+  #  conducted on gumtree.co.za
 
   Background:
     Given The user enters an already existing email
-    # user needs to scroll to the top of the registration form
-    # find create an account string, Validate the correct url, Validate the form title, scroll and validate register button
-    # Click register button, scroll to the top and verify validation message
 
   Scenario Outline:
     Given the user enters their <username> and clicks create

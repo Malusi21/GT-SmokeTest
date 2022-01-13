@@ -21,7 +21,7 @@ public class SmokeTestSteps {
     JavascriptExecutor js = null;
     Variables var = new Variables();
 
-    private class Variables {
+    private static class Variables {
         String MyStor_Home = "https://www.gumtree.co.za";
         String chrome_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\chromedriver.exe";
         String firefox_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\geckodriver.exe";
