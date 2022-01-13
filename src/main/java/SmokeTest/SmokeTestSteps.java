@@ -2,7 +2,6 @@ package SmokeTest;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -30,8 +29,6 @@ public class SmokeTestSteps {
         String username_field = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"input-main\", \" \" ))]";
         String password_field = "/html/body/div[1]/section/div[2]/div/div/div[2]/div[4]/form/div[2]/input";
         String login_button = "/html/body//form/div[4]/div[2]/button[contains(.,\"Log In\")]";
-        //String login_button = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-submit\", \" \" ))]";
-        String username = "/html/body/div[1]/div[3]/header/div[3]/nav/div[2]/span/span[2]";
         String Error_test = "/html/body/div[1]/section/div[2]/div/div/div[1]";
         String password_error_dialog = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-form-error\", \" \" ))]";
         String getPassword_error_text = "Please correct the errors in red below.";
@@ -76,10 +73,8 @@ public class SmokeTestSteps {
 
     @Given("The user enters an already existing email")
     public void the_user_enters_an_already_existing_email() {
-        // Write code here that turns the phrase above into concrete actions
         System.out.println("email already exists");
 
-        //throw new io.cucumber.java.PendingException();
     }
 
     @Given("the user enters their {string} and clicks create")
@@ -90,7 +85,6 @@ public class SmokeTestSteps {
         driver.findElement(By.xpath(var.gumtree_label)).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         enter_login_details(string,var.username_field);
-        //throw new io.cucumber.java.PendingException();
     }
 
     @When("the user tries logging in with a {string}")
@@ -122,7 +116,6 @@ public class SmokeTestSteps {
 
     @After
     public void close_the_browser(){
-        //Incorrect_login();
         driver.close();
         driver.quit();
     }
