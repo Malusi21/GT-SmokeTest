@@ -8,7 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(features="C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\features\\STest.feature", glue={"SmokeTest"},
         monochrome = true,
         tags = "@SmokeTest",
-        plugin = {"pretty","html:target/HtmlReport.html","junit:target/JUnitReport.xml","json:target/JsonReport.json"}
+        plugin = {"pretty","html:target/HtmlReport.html","junit:target/JUnitReport.xml","json:target/JsonReport.json"},
+        publish = true
         )
 
 public class SmokeTestRunner {

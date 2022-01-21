@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="2" time="34.5">
-<testcase classname="Smoke Test Gumtree" name="_2" time="17.766">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="2" time="36.18">
+<testcase classname="Smoke Test Gumtree" name="_2" time="19.659">
 <system-out><![CDATA[Given The user enters an already existing email.............................passed
 Given the user enters their "Malusi2051@gmail.com" and clicks create........passed
 When the user tries logging in with a "Legend!@12"..........................passed
 Then the user is presented with the correct user............................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Smoke Test Gumtree" name="_3" time="16.592">
+<testcase classname="Smoke Test Gumtree" name="_3" time="16.35">
 <system-out><![CDATA[Given The user enters an already existing email.............................passed
 Given the user enters their "Malusi@test.com" and clicks create.............passed
 When the user tries logging in with a "1234"................................passed

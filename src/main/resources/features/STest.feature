@@ -16,6 +16,6 @@ Feature: Smoke Test Gumtree
     Then the user is presented with the correct user
 
     Examples:
-      | username               | password     |
-      | "Malusi2051@gmail.com" | "Legend!@12" |
-      | "Malusi@test.com"      | "1234"       |
+      | username          | password |
+      | ""                | ""       |
+      | "Malusi@test.com" | "1234"   |
