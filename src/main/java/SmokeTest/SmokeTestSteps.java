@@ -24,12 +24,13 @@ public class SmokeTestSteps {
         String MyStor_Home = "https://www.gumtree.co.za";
         String chrome_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\chromedriver.exe";
         String firefox_path = "C:\\Users\\malusi.msomi\\Documents\\GT-smoke\\src\\main\\resources\\drivers\\geckodriver.exe";
-        String cache_proceed_btn = "/html/body//div[2]/button[contains(.,\"Proceed\")]";
-        String gumtree_label = "/html/body/div[1]/div[3]/header/div[3]/nav/div[2]/span/span[contains(@class,\"label\")]";
-        String username_field = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"input-main\", \" \" ))]";
-        String password_field = "/html/body/div[1]/section/div[2]/div/div/div[2]/div[4]/form/div[2]/input";
-        String login_button = "/html/body//form/div[4]/div[2]/button[contains(.,\"Log In\")]";
-        String Error_test = "/html/body/div[1]/section/div[2]/div/div/div[1]";
+        String cache_proceed_btn = "//button[contains(.,'Proceed')]";
+        String gumtree_label = "//header/div[contains(@class,'logo')]";
+        String login_button = "//span[contains(@class,'auth-nav-link sign-in')]";
+        String login_submit_button = "//button[contains(@class,'submit-button login-submit')]";
+        String username_field = "/html/body/div[1]/section/div[2]/div/div/div[2]/div[4]/form/div[1]/input[contains(@class,'input-main')]";
+        String password_field = "/html/body/div[1]/section/div[2]/div/div/div[2]/div[4]/form/div[2]/input[contains(@class,'input-main')]";
+        String Error_test = "/html/body/div[1]/section/div[2]/div/div/div[contains(@class,'login-form-error')]";
         String password_error_dialog = "//*[contains(concat( \" \", @class, \" \" ), concat( \" \", \"login-form-error\", \" \" ))]";
         String getPassword_error_text = "Please correct the errors in red below.";
     }
@@ -83,6 +84,7 @@ public class SmokeTestSteps {
         driver.findElement(By.xpath(var.cache_proceed_btn)).click();
         driver.findElement(By.xpath(var.gumtree_label)).isDisplayed();
         driver.findElement(By.xpath(var.gumtree_label)).click();
+        driver.findElement(By.xpath(var.login_button)).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         enter_login_details(string,var.username_field);
     }
@@ -93,17 +95,17 @@ public class SmokeTestSteps {
     }
 
     @Then("the user is presented with the correct user")
-    public void the_user_is_presented_with_the_correct_user() {
+    public void the_user_is_presented_with_the_correct_user() throws Exception {
         // Write code here that turns the phrase above into concrete actions
-        driver.findElement(By.xpath(var.login_button)).isDisplayed();
-        driver.findElement(By.xpath(var.login_button)).click();
+        driver.findElement(By.xpath(var.login_submit_button)).isDisplayed();
+        driver.findElement(By.xpath(var.login_submit_button)).click();
         verify_login();
     }
 
     public void Incorrect_login(){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(By.xpath(var.Error_test)).isDisplayed();
-        String errorTest = driver.findElement(By.xpath(var.password_error_dialog)).getText();
+        String errorTest = driver.findElement(By.xpath(var.Error_test)).getText();
         assertEquals(errorTest, var.getPassword_error_text);
         assertTrue(driver.findElement(By.xpath(var.login_button)).isDisplayed());
     }
@@ -120,13 +122,9 @@ public class SmokeTestSteps {
         driver.quit();
     }
 
-    public void verify_login(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        boolean found = driver.findElement(By.xpath(var.login_button)).isDisplayed();
+    public void verify_login() throws Exception{
+        Thread.sleep(3000);
+        boolean found = driver.findElement(By.xpath(var.login_submit_button)).isDisplayed();
         System.out.println(found);
         if (found){
             Incorrect_login();
